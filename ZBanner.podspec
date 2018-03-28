@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.homepage         = 'https://github.com/zhangshuqing/ZBanner'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'zhangshuqing' => 'zhangshuqing912@163.com' }
-  s.source           = { :git => 'https://github.com/zhangshuqing/Banner.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/zhangshuqing/ZBanner.git', :tag => s.version.to_s }
  
   s.ios.deployment_target = '9.0'
   s.source_files = 'Banner/ZBanner/*'
