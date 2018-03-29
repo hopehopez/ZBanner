@@ -9,7 +9,7 @@
 import UIKit
 
 @objc
-protocol ZBannerViewDataSource: NSObjectProtocol {
+public protocol ZBannerViewDataSource: NSObjectProtocol {
     
     @objc(numberOfItemsInPagerView:)
     func numberOfItems(in pagerView: ZBannerView) -> Int
@@ -21,7 +21,7 @@ protocol ZBannerViewDataSource: NSObjectProtocol {
 }
 
 @objc
-protocol ZBannerViewDelegate: NSObjectProtocol {
+public protocol ZBannerViewDelegate: NSObjectProtocol {
     @objc(bannerView:didSeclectedAtIndex:)
     optional func bannerView(_ bannerView: ZBannerView, didSelectItemAt index:Int)
     
@@ -31,7 +31,7 @@ protocol ZBannerViewDelegate: NSObjectProtocol {
 }
 
 
-class ZBannerView: UIView {
+open class ZBannerView: UIView {
 
     @IBOutlet weak var dataSource: ZBannerViewDataSource?
     @IBOutlet weak var delegate: ZBannerViewDelegate?
@@ -104,7 +104,7 @@ class ZBannerView: UIView {
         self.collectionViewLayout = layout
     }
     
-    override func willMove(toWindow newWindow: UIWindow?) {
+    override open func willMove(toWindow newWindow: UIWindow?) {
         super.willMove(toWindow: newWindow)
         if newWindow != nil {
             startTimer()
@@ -167,7 +167,7 @@ class ZBannerView: UIView {
         return IndexPath(item: 0, section: 0)
     }
     
-    override func layoutSubviews() {
+    override open func layoutSubviews() {
         super.layoutSubviews()
         contentView.frame = bounds
         collectionVeiw.frame = contentView.bounds
@@ -194,7 +194,7 @@ class ZBannerView: UIView {
 }
 
 extension ZBannerView: UICollectionViewDataSource {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
         guard let dataSource = dataSource else {
             return 0
         }
@@ -209,11 +209,11 @@ extension ZBannerView: UICollectionViewDataSource {
         return numberOfSetions
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return numberOfItems
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         dequeingSection = indexPath.section
         let cell = dataSource!.bannerView(self, cellForItemAt: indexPath.item)
         return cell
@@ -222,7 +222,7 @@ extension ZBannerView: UICollectionViewDataSource {
 }
 
 extension ZBannerView: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let function = delegate?.bannerView(_: didSelectItemAt:) else {
             return
         }
@@ -231,7 +231,7 @@ extension ZBannerView: UICollectionViewDelegate {
         function(self, index)
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if self.numberOfItems > 0 {
             let currentIndex = lround(Double(self.scollOffSet)) % numberOfItems
             if currentIndex != self.currentIndex {
@@ -246,11 +246,11 @@ extension ZBannerView: UICollectionViewDelegate {
         function(self)
     }
     
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-//        cancelTimer()
+    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        cancelTimer()
     }
     
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-//        startTimer()
+    public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        startTimer()
     }
 }

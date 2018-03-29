@@ -7,13 +7,13 @@
 //
 
 import UIKit
-enum ZBannerViewTransformerTpye: Int {
+public enum ZBannerViewTransformerTpye: Int {
     case none
     case linear
     case overlap
 }
 
-class ZBannerViewTransformer: NSObject {
+open class ZBannerViewTransformer: NSObject {
 
     weak var bannerView: ZBannerView?
     var type: ZBannerViewTransformerTpye

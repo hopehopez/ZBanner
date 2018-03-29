@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'ZBanner'
-  s.version          = '1.0.0'
+  s.version          = '1.0.1'
   s.summary          = 'a simple scorll banner view'
  
   s.description      = <<-DESC
