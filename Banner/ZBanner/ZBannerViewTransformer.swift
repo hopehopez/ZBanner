@@ -13,7 +13,7 @@ public enum ZBannerViewTransformerTpye: Int {
     case overlap
 }
 
-open class ZBannerViewTransformer: NSObject {
+public class ZBannerViewTransformer: NSObject {
 
     weak var bannerView: ZBannerView?
     var type: ZBannerViewTransformerTpye

@@ -14,7 +14,8 @@ class ZCollectionView: UICollectionView {
         return self.superview?.superview as? ZBannerView
     }
     
-    override open var scrollsToTop: Bool {
+    #if !os(tvOS)
+    override var scrollsToTop: Bool {
         set {
             super.scrollsToTop = false
         }
@@ -22,8 +23,9 @@ class ZCollectionView: UICollectionView {
             return false
         }
     }
+    #endif
     
-    override open var contentInset: UIEdgeInsets {
+    override var contentInset: UIEdgeInsets {
         set {
             super.contentInset = .zero
             if (newValue.top > 0) {
@@ -41,7 +43,7 @@ class ZCollectionView: UICollectionView {
         self.commonInit()
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.commonInit()
     }
@@ -57,9 +59,10 @@ class ZCollectionView: UICollectionView {
         if #available(iOS 11.0, *) {
             self.contentInsetAdjustmentBehavior = .never
         }
+        #if !os(tvOS)
             self.scrollsToTop = false
             self.isPagingEnabled = false
-        
+        #endif
     }
 
 }

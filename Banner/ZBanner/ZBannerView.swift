@@ -30,7 +30,7 @@ public protocol ZBannerViewDelegate: NSObjectProtocol {
     
 }
 
-
+@IBDesignable
 open class ZBannerView: UIView {
 
     @IBOutlet weak var dataSource: ZBannerViewDataSource?
@@ -60,7 +60,7 @@ open class ZBannerView: UIView {
         }
     }
     
-    var transformer: ZBannerViewTransformer? {
+   public var transformer: ZBannerViewTransformer? {
         didSet {
             self.transformer?.bannerView = self
             self.collectionViewLayout.forceInvalidate()
@@ -173,12 +173,12 @@ open class ZBannerView: UIView {
         collectionVeiw.frame = contentView.bounds
     }
     
-    func register(cellClass: Swift.AnyClass?, forCellWithReuseIdentifier identifier: String) {
+    public func register(cellClass: Swift.AnyClass?, forCellWithReuseIdentifier identifier: String) {
         collectionVeiw.register(cellClass, forCellWithReuseIdentifier: identifier)
         
     }
     
-    func dequeueReusableCell(withReuseIdentifier identifier:String, at index: Int) -> ZBannerViewCell {
+    public func dequeueReusableCell(withReuseIdentifier identifier:String, at index: Int) -> ZBannerViewCell {
         let indexPath = IndexPath(item: index, section: dequeingSection)
         let cell = collectionVeiw.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
         guard cell.isKind(of: ZBannerViewCell.self) else {
@@ -187,7 +187,7 @@ open class ZBannerView: UIView {
         return cell as! ZBannerViewCell
     }
     
-    func reloadData() {
+    public func reloadData() {
         collectionViewLayout.isNeedsReprepare = true
         collectionVeiw.reloadData()
     }
