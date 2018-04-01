@@ -30,6 +30,13 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="T38-nz-YsA"/>
                                 </connections>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GWS-NQ-7dX" customClass="ZPageControl" customModule="Banner" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="183" width="375" height="30"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="juF-A8-8Lp"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TFk-9g-Q0i">
                                 <rect key="frame" x="0.0" y="351" width="375" height="100"/>
                                 <color key="backgroundColor" red="1" green="0.49803921569999998" blue="0.4941176471" alpha="1" colorSpace="calibratedRGB"/>
@@ -41,16 +48,20 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="vFH-RM-8qT" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="4dl-JN-VsM"/>
+                            <constraint firstItem="GWS-NQ-7dX" firstAttribute="leading" secondItem="vFH-RM-8qT" secondAttribute="leading" id="BYa-V3-QqJ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="vFH-RM-8qT" secondAttribute="trailing" id="C0r-ck-JGl"/>
                             <constraint firstItem="vFH-RM-8qT" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="EFX-Lu-5SM"/>
                             <constraint firstItem="TFk-9g-Q0i" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="FV2-ls-9DB"/>
                             <constraint firstItem="TFk-9g-Q0i" firstAttribute="top" secondItem="vFH-RM-8qT" secondAttribute="bottom" constant="138" id="OT8-LM-Db6"/>
+                            <constraint firstItem="GWS-NQ-7dX" firstAttribute="bottom" secondItem="vFH-RM-8qT" secondAttribute="bottom" id="TDU-OR-hrQ"/>
+                            <constraint firstItem="GWS-NQ-7dX" firstAttribute="trailing" secondItem="vFH-RM-8qT" secondAttribute="trailing" id="cQ1-l8-jTk"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="TFk-9g-Q0i" secondAttribute="trailing" id="wal-Tl-aYY"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="bannerView" destination="vFH-RM-8qT" id="3SY-5x-XHd"/>
+                        <outlet property="pageControl" destination="GWS-NQ-7dX" id="5DY-Lo-TvH"/>
                         <outlet property="testView" destination="TFk-9g-Q0i" id="OHr-6K-Zpa"/>
                     </connections>
                 </viewController>

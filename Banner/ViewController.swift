@@ -18,6 +18,11 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var pageControl: ZPageControl!{
+        didSet{
+            pageControl.numberOfPages = 7
+        }
+    }
     @IBOutlet weak var testView: UIView!
     fileprivate let imageNames = ["1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg","7.jpg"]
     fileprivate var numberOfItems = 7
@@ -59,8 +64,15 @@ extension ViewController: ZBannerViewDataSource, ZBannerViewDelegate{
         
     }
     
+    func bannerViewDidScroll(_ bannerView: ZBannerView) {
+        guard pageControl.currentPage != bannerView.currentIndex else {
+            return
+        }
+        pageControl.currentPage = bannerView.currentIndex
+    }
+    
     func bannerView(_ bannerView: ZBannerView, didSelectItemAt index: Int) {
-        
+        pageControl.currentPage = index
     }
 }
 

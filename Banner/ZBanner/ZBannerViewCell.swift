@@ -8,9 +8,9 @@
 
 import UIKit
 
-public class ZBannerViewCell: UICollectionViewCell {
+open class ZBannerViewCell: UICollectionViewCell {
     
-    public let imageView = UIImageView()
+   public let imageView = UIImageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,7 +28,7 @@ public class ZBannerViewCell: UICollectionViewCell {
         self.contentView.addSubview(imageView)
     }
     
-    override public func layoutSubviews() {
+    override open func layoutSubviews() {
         super.layoutSubviews()
         imageView.frame = contentView.bounds
     }

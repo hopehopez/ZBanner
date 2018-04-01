@@ -30,7 +30,7 @@ public protocol ZBannerViewDelegate: NSObjectProtocol {
     
 }
 
-@IBDesignable
+
 open class ZBannerView: UIView {
 
     @IBOutlet weak var dataSource: ZBannerViewDataSource?
@@ -60,7 +60,7 @@ open class ZBannerView: UIView {
         }
     }
     
-   public var transformer: ZBannerViewTransformer? {
+    public var transformer: ZBannerViewTransformer? {
         didSet {
             self.transformer?.bannerView = self
             self.collectionViewLayout.forceInvalidate()
@@ -84,6 +84,8 @@ open class ZBannerView: UIView {
         super.init(coder: aDecoder)
         commonInit()
     }
+    
+    
     
     fileprivate func commonInit() {
         let contentView = UIView.init(frame: .zero)
