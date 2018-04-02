@@ -32,7 +32,7 @@ public protocol ZBannerViewDelegate: NSObjectProtocol {
 
 
 open class ZBannerView: UIView {
-
+    
     @IBOutlet weak var dataSource: ZBannerViewDataSource?
     @IBOutlet weak var delegate: ZBannerViewDelegate?
     
@@ -42,9 +42,11 @@ open class ZBannerView: UIView {
     
     private var timer: Timer?
     
-     var numberOfItems = 0
-     var numberOfSetions = 0
+    var numberOfItems = 0
+    var numberOfSetions = 0
     fileprivate var dequeingSection = 0
+    
+    fileprivate var possibleTargetingIndexPath: IndexPath?
     
     var currentIndex: Int = 0
     
@@ -100,7 +102,7 @@ open class ZBannerView: UIView {
         collectionView.backgroundColor = UIColor.orange
         collectionView.alwaysBounceHorizontal = false
         collectionView.alwaysBounceVertical = false
-//        collectionView.isPagingEnabled = true
+        //        collectionView.isPagingEnabled = true
         self.contentView.addSubview(collectionView)
         self.collectionVeiw = collectionView
         self.collectionViewLayout = layout
@@ -116,11 +118,11 @@ open class ZBannerView: UIView {
     }
     
     func startTimer() {
-//        guard timer == nil else {
-//            return
-//        }
-//        timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(flipNext), userInfo: nil, repeats: true)
-//        RunLoop.main.add(timer!, forMode: .commonModes)
+        //        guard timer == nil else {
+        //            return
+        //        }
+        //        timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(flipNext), userInfo: nil, repeats: true)
+        //        RunLoop.main.add(timer!, forMode: .commonModes)
     }
     
     fileprivate func cancelTimer() {
@@ -129,6 +131,19 @@ open class ZBannerView: UIView {
         }
         self.timer!.invalidate()
         self.timer = nil
+    }
+    
+    fileprivate func nearbyIndexPath(for index: Int) -> IndexPath{
+        let  currentIndex = self.currentIndex
+        let  currentSection  = self.centermostIndexPath().section
+        if abs(currentIndex - index) <= numberOfItems / 2{
+            return IndexPath(item: currentIndex, section: currentSection)
+        } else if (index - currentIndex >= 0) {
+            return IndexPath(item: currentIndex, section: currentSection - 1)
+        } else {
+            return IndexPath(item: currentIndex, section: currentSection + 1)
+        }
+        
     }
     
     @objc func flipNext() {
@@ -189,6 +204,25 @@ open class ZBannerView: UIView {
         return cell as! ZBannerViewCell
     }
     
+    public func scrollToItem(at index: Int, animated: Bool) {
+        guard index < numberOfItems else {
+            fatalError("index \(index) is out of range [0...\(self.numberOfItems-1)]")
+        }
+        
+        let indexPath = { () -> IndexPath in
+            if let indexPath = possibleTargetingIndexPath, indexPath.item == index {
+                defer {
+                    possibleTargetingIndexPath = nil
+                }
+                return indexPath
+            }
+            return numberOfSetions > 1 ? nearbyIndexPath(for: index) : IndexPath(item: index, section: 0)
+        }()
+        
+        let contentOffSet = collectionViewLayout.contentOffSet(for: indexPath)
+        collectionVeiw.setContentOffset(contentOffSet, animated: true)
+    }
+    
     public func reloadData() {
         collectionViewLayout.isNeedsReprepare = true
         collectionVeiw.reloadData()
@@ -207,7 +241,7 @@ extension ZBannerView: UICollectionViewDataSource {
         }
         
         numberOfSetions = Int(Int16.max) / numberOfItems
-//        numberOfSetions = 1
+        //        numberOfSetions = 1
         return numberOfSetions
     }
     
@@ -227,6 +261,10 @@ extension ZBannerView: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let function = delegate?.bannerView(_: didSelectItemAt:) else {
             return
+        }
+        possibleTargetingIndexPath = indexPath
+        defer {
+            possibleTargetingIndexPath = nil
         }
         
         let index = indexPath.item % numberOfItems

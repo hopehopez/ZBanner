@@ -23,7 +23,6 @@ class ViewController: UIViewController {
             pageControl.numberOfPages = 7
         }
     }
-    @IBOutlet weak var testView: UIView!
     fileprivate let imageNames = ["1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg","7.jpg"]
     fileprivate var numberOfItems = 7
     
@@ -36,7 +35,6 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        testView.bounds = CGRect(x: 50, y: 0, width: 100, height: 50)
         self.bannerView.transformer = ZBannerViewTransformer.init(type: .overlap)
         let transform = CGAffineTransform(scaleX: 0.7, y: 1.0)
         self.bannerView.itemSize = self.bannerView.frame.size.applying(transform)
@@ -73,6 +71,7 @@ extension ViewController: ZBannerViewDataSource, ZBannerViewDelegate{
     
     func bannerView(_ bannerView: ZBannerView, didSelectItemAt index: Int) {
         pageControl.currentPage = index
+        bannerView.scrollToItem(at: index, animated: true)
     }
 }
 
